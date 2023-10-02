@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: sealigths-lambda-example-sl
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  SealightsLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: sealights_layer
+      Description: Layer for managing code coverage
+      ContentUri: sealights_layer/
+      CompatibleRuntimes:
+        - python3.11
+  Function1:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri:  function_1/
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      Layers:
+          - !Ref SealightsLayer
+      Environment:
+        Variables:
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/setup
+          SL_DEBUG: true
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /function1
+            Method: get
+  Function2:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri:  function_2/
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      Layers:
+          - !Ref SealightsLayer
+      Environment:
+        Variables:
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/setup
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /function2
+            Method: get
+Outputs:
+  Function1:
+    Description: "Sealights Lambda Function1 ARN"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/function1/"
+  Function2:
+    Description: "Sealights Lambda Function2 ARN"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/function2/"

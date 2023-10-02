@@ -1,0 +1,49 @@
+version: '3'
+
+
+tasks:
+  install:
+    cmds:
+      - pip install --no-cache-dir ../SL.OnPremise.Agents.Python
+  config:
+    cmds:
+      - sl-python config --appname lambda-python-example --tokenfile ./sltoken.txt --exclude "*venv*"
+  scan:
+    env:
+    cmds:
+      - sl-python scan --buildsessionidfile ./buildSessionId.txt --tokenfile ./sltoken.txt
+  configlambda:
+    cmds:
+      - sl-python configlambda --slconfigpaths "./function_1,./function_2" --collectorurl "https://all-peas-press.loca.lt" --exportlayerpath "./"
+
+  deploy_prod:
+    cmds:
+      - sam build -u -t template_prod.yaml
+      - sam deploy
+
+  deploy_sl:
+    cmds:
+      - sam build -u -t template_sl.yaml
+      - sam deploy
+
+  start:
+    cmds:
+      - sl-python start  --teststage stage_1
+
+  end:
+    env:
+    #      SL_DEBUG: true
+    cmds:
+      - sl-python end --teststage stage_1
+
+  prod_ci:
+    cmds:
+      - task: deploy_prod
+
+  sl_ci:
+    cmds:
+      - task: install
+      - task: config
+      - task: scan
+      - task: configlambda
+      - task: deploy_sl
