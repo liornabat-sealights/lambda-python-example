@@ -14,45 +14,62 @@ Resources:
       ContentUri: sealights_layer/
       CompatibleRuntimes:
         - python3.11
-  Function1:
+
+#  Function1:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      CodeUri:  src/dir1/function_1/
+#      Handler: app.lambda_handler
+#      Runtime: python3.11
+#      Layers:
+#          - !Ref SealightsLayer
+#      Environment:
+#        Variables:
+#          AWS_LAMBDA_EXEC_WRAPPER: /opt/setup
+#          SL_DEBUG: true
+#      Events:
+#        HelloWorld:
+#          Type: Api
+#          Properties:
+#            Path: /function1
+#            Method: get
+#  Function2:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      CodeUri:  src/dir1/function_2/
+#      Handler: app.lambda_handler
+#      Runtime: python3.11
+#      Layers:
+#          - !Ref SealightsLayer
+#      Environment:
+#        Variables:
+#          AWS_LAMBDA_EXEC_WRAPPER: /opt/setup
+#          SL_DEBUG: true
+#      Events:
+#        HelloWorld:
+#          Type: Api
+#          Properties:
+#            Path: /function2
+#            Method: get
+  Function3:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri:  function_1/
-      Handler: app.lambda_handler
+      CodeUri:  src/function_3/
+      Handler: app.handler
       Runtime: python3.11
-      Layers:
-          - !Ref SealightsLayer
       Environment:
-        Variables:
-          AWS_LAMBDA_EXEC_WRAPPER: /opt/setup
-          SL_DEBUG: true
-      Events:
-        HelloWorld:
-          Type: Api
-          Properties:
-            Path: /function1
-            Method: get
-  Function2:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri:  function_2/
-      Handler: app.lambda_handler
-      Runtime: python3.11
-      Layers:
-          - !Ref SealightsLayer
-      Environment:
-        Variables:
-          AWS_LAMBDA_EXEC_WRAPPER: /opt/setup
       Events:
         HelloWorld:
           Type: Api
           Properties:
             Path: /function2
             Method: get
+
+
 Outputs:
-  Function1:
-    Description: "Sealights Lambda Function1 ARN"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/function1/"
-  Function2:
-    Description: "Sealights Lambda Function2 ARN"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/function2/"
+#  Function1:
+#    Description: "Sealights Lambda Function1 ARN"
+#    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/function1/"
+#  Function2:
+#    Description: "Sealights Lambda Function2 ARN"
+#    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/function2/"

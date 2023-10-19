@@ -3,14 +3,28 @@ Transform: AWS::Serverless-2016-10-31
 Description: Sample SAM Template for powertools-quickstart
 Globals:
     Function:
-        Timeout: 3
+        Timeout: 30
 Resources:
+    SealightsLayer:
+      Type: AWS::Serverless::LayerVersion
+      Properties:
+        LayerName: sealights_layer
+        Description: Layer for managing code coverage
+        ContentUri: sealights_layer/
+        CompatibleRuntimes:
+          - python3.9
     HelloWorldFunction:
         Type: AWS::Serverless::Function
         Properties:
             CodeUri: hello_world/
             Handler: app.lambda_handler
             Runtime: python3.9
+            Layers:
+                - !Ref SealightsLayer
+            Environment:
+              Variables:
+                AWS_LAMBDA_EXEC_WRAPPER: /opt/setup
+                SL_DEBUG: true
             Events:
                 HelloWorld:
                     Type: Api

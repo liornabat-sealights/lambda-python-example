@@ -1,0 +1,34 @@
+{
+    "resource": "/health",
+    "path": "/health",
+    "httpMethod": "GET",
+    "headers": {
+        "Accept": "application/json"
+    },
+    "queryStringParameters": null,
+    "pathParameters": null,
+    "requestContext": {
+        "accountId": "123456789012",
+        "resourceId": "abcd1234",
+        "stage": "test",
+        "requestId": "test-invoke-request",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "127.0.0.1",
+            "principalOrgId": null,
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "Custom User Agent String",
+            "user": null
+        },
+        "resourcePath": "/health",
+        "httpMethod": "GET",
+        "apiId": "1234567890",
+        "protocol": "HTTP/1.1"
+    }
+}
